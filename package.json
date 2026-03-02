@@ -1,0 +1,46 @@
+{
+  "name": "ip-ts",
+  "version": "1.0.0",
+  "author": "Deni Irawan Nugraha <deni.irawan40563@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/denycode-dev/ip-ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/denycode-dev/ip-ts.git",
+    "directory": "packages/ip-ts"
+  },
+  "keywords": [
+    "ip",
+    "ip address",
+    "ip address library",
+    "ip address parser",
+    "ip address validator",
+    "ip address converter",
+    "ip address to buffer",
+    "buffer to ip address"
+  ],
+  "description": "Modern TypeScript IP address library",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.esm.json && tsc -p tsconfig.cjs.json && tsc -p tsconfig.types.json",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.12.7",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.4.5"
+  }
+}
