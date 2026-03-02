@@ -3,11 +3,11 @@
   "version": "1.2.0",
   "author": "Deni Irawan Nugraha <deni.irawan40563@gmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/denycode-dev/node-ip-ts",
+  "homepage": "https://github.com/denycode-dev/ip-ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/denycode-dev/node-ip-ts.git",
-    "directory": "packages/node-ip-ts"
+    "url": "https://github.com/denycode-dev/ip-ts.git",
+    "directory": "packages/ip-ts"
   },
   "keywords": [
     "ip address",
