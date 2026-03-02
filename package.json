@@ -1,13 +1,13 @@
 {
-  "name": "ip-ts",
+  "name": "node-ip-ts",
   "version": "1.0.0",
   "author": "Deni Irawan Nugraha <deni.irawan40563@gmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/denycode-dev/ip-ts",
+  "homepage": "https://github.com/denycode-dev/node-ip-ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/denycode-dev/ip-ts.git",
-    "directory": "packages/ip-ts"
+    "url": "https://github.com/denycode-dev/node-ip-ts.git",
+    "directory": "packages/node-ip-ts"
   },
   "keywords": [
     "ip",

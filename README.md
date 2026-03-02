@@ -2,7 +2,7 @@
 
 ### A modern, type-safe IP address utility library for Node.js
 
-**ip-ts** is a full TypeScript rewrite of the popular [`ip`](https://www.npmjs.com/package/ip) package —  
+**node-ip-ts** is a full TypeScript rewrite of the popular [`ip`](https://www.npmjs.com/package/ip) package —  
 rebuilt from the ground up with strict types, ES Modules, and zero external dependencies.
 
 [Installation](#installation) · [Quick Start](#quick-start) · [API Reference](#api-reference) · [Contributing](#contributing)
@@ -11,19 +11,19 @@ rebuilt from the ground up with strict types, ES Modules, and zero external depe
 
 ---
 
-## Why ip-ts?
+## Why node-ip-ts?
 
-The original `ip` package has millions of weekly downloads but ships no TypeScript types and only supports CommonJS. **ip-ts** solves that:
+The original `ip` package has millions of weekly downloads but ships no TypeScript types and only supports CommonJS. **node-ip-ts** solves that:
 
-|                       | `ip` |  `ip-ts`   |
-| --------------------- | :--: | :--------: |
-| TypeScript support    |  ❌  |     ✅     |
-| ES Module support     |  ❌  |     ✅     |
-| CommonJS support      |  ✅  |     ✅     |
-| Type declarations     |  ❌  |     ✅     |
-| Strict null checks    |  ❌  |     ✅     |
-| External dependencies |  0   |     0      |
-| API compatibility     |  —   | ✅ drop-in |
+|                       | `ip` | `node-ip-ts` |
+| --------------------- | :--: | :----------: |
+| TypeScript support    |  ❌  |      ✅      |
+| ES Module support     |  ❌  |      ✅      |
+| CommonJS support      |  ✅  |      ✅      |
+| Type declarations     |  ❌  |      ✅      |
+| Strict null checks    |  ❌  |      ✅      |
+| External dependencies |  0   |      0       |
+| API compatibility     |  —   |  ✅ drop-in  |
 
 ---
 
@@ -31,13 +31,13 @@ The original `ip` package has millions of weekly downloads but ships no TypeScri
 
 ```bash
 # npm
-npm install ip-ts
+npm install node-node-ip-ts
 
 # pnpm
-pnpm add ip-ts
+pnpm add node-node-ip-ts
 
 # yarn
-yarn add ip-ts
+yarn add node-node-ip-ts
 ```
 
 > **Requirements:** Node.js ≥ 16
@@ -49,7 +49,7 @@ yarn add ip-ts
 ### ESM / TypeScript
 
 ```ts
-import * as ip from "ip-ts";
+import * as ip from "node-node-ip-ts";
 
 // Address classification
 ip.address(); // first private IPv4 address, e.g. '192.168.1.42'
@@ -76,13 +76,13 @@ ip.fromLong(4294967295); // '255.255.255.255'
 ### Named imports (tree-shakeable)
 
 ```ts
-import { isPrivate, cidrSubnet, toLong } from "ip-ts";
+import { isPrivate, cidrSubnet, toLong } from "node-ip-ts";
 ```
 
 ### CommonJS
 
 ```js
-const ip = require("ip-ts");
+const ip = require("node-ip-ts");
 ip.isPrivate("10.0.0.1"); // true
 ```
 
@@ -334,7 +334,7 @@ ip.loopback("ipv6"); // 'fe80::1'
 ### Types
 
 ```ts
-import type { IPFamily, SubnetInfo } from "ip-ts";
+import type { IPFamily, SubnetInfo } from "node-ip-ts";
 
 type IPFamily = "ipv4" | "ipv6";
 
@@ -356,7 +356,7 @@ interface SubnetInfo {
 ## Project Structure
 
 ```
-ip-ts/
+node-ip-ts/
 ├── src/
 │   └── index.ts          # Single source file — all named exports
 ├── dist/
@@ -379,8 +379,8 @@ Contributions are welcome! Here's how to get started:
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-org/ip-ts.git
-cd ip-ts
+git clone https://github.com/your-org/node-ip-ts.git
+cd node-ip-ts
 
 # Install dependencies
 npm install
@@ -401,23 +401,23 @@ npm run build
 
 ### Reporting Issues
 
-Please [open an issue](https://github.com/your-org/ip-ts/issues/new) with a minimal reproduction case.
+Please [open an issue](https://github.com/your-org/node-ip-ts/issues/new) with a minimal reproduction case.
 
 ---
 
 ## Migration from `ip`
 
-**ip-ts** is designed to be a drop-in replacement. Simply swap your import:
+**node-ip-ts** is designed to be a drop-in replacement. Simply swap your import:
 
 ```diff
 - const ip = require('ip');
-+ const ip = require('ip-ts');
++ const ip = require('node-ip-ts');
 ```
 
 Or for TypeScript / ESM:
 
 ```ts
-import * as ip from "ip-ts";
+import * as ip from "node-ip-ts";
 ```
 
 All function names and behaviours are identical to the original library.
