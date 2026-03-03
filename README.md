@@ -454,7 +454,7 @@ All function names and behaviours are identical to the original library.
 
 ## License
 
-[MIT](./LICENSE) © your-org
+[MIT](./LICENSE) © Deni Irawan Nugraha
 
 ---
 
