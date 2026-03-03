@@ -12,10 +12,20 @@
 
 ### A modern, type-safe IP address utility library for Node.js
 
+# node-ip-ts
+
+<!-- Package Info -->
 [![npm version](https://img.shields.io/npm/v/node-ip-ts?color=0ea5e9&style=flat-square)](https://www.npmjs.com/package/node-ip-ts)
+[![npm downloads](https://img.shields.io/npm/dw/node-ip-ts?color=0ea5e9&style=flat-square)](https://www.npmjs.com/package/node-ip-ts)
 [![license](https://img.shields.io/npm/l/node-ip-ts?color=0ea5e9&style=flat-square)](./LICENSE)
-[![types](https://img.shields.io/npm/types/node-ip-ts?style=flat-square)](https://www.npmjs.com/package/node-ip-ts)
-[![zero deps](https://img.shields.io/badge/dependencies-0-brightgreen?style=flat-square)](./package.json)
+
+<!-- Tech Quality -->
+[![TypeScript](https://img.shields.io/npm/types/node-ip-ts?style=flat-square)](https://www.npmjs.com/package/node-ip-ts)
+[![zero dependencies](https://img.shields.io/badge/dependencies-0-brightgreen?style=flat-square)](./package.json)
+
+<!-- Security -->
+[![Snyk Security](https://snyk.io/test/github/denycode-dev/ip-ts/badge.svg?style=flat-square)](https://snyk.io/test/github/denycode-dev/ip-ts)
+[![Socket Security](https://badge.socket.dev/npm/package/node-ip-ts)](https://socket.dev/npm/package/node-ip-ts)
 
 <br />
 
@@ -407,7 +417,7 @@ Contributions are welcome! Here's how to get started:
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-org/node-ip-ts.git
+git clone https://github.com/denycode-dev/ip-ts.git
 cd node-ip-ts
 
 # Install dependencies
@@ -429,7 +439,7 @@ npm run build
 
 ### Reporting Issues
 
-Please [open an issue](https://github.com/your-org/node-ip-ts/issues/new) with a minimal reproduction case.
+Please [open an issue](https://github.com/denycode-dev/ip-ts/issues/new) with a minimal reproduction case.
 
 ---
 
