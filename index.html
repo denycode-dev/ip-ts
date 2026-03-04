@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" itemscope itemtype="https://schema.org/SoftwareApplication">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ═══ Primary SEO Meta ═══ -->
+  <title>node-ip-ts — Type-safe IP Address Utility Library for Node.js</title>
+  <meta name="description" content="node-ip-ts is a modern, zero-dependency TypeScript rewrite of the popular ip package for Node.js. Supports ESM and CommonJS, strict null checks, full type declarations, and drop-in API compatibility." />
+  <meta name="keywords" content="node-ip-ts, ip address, typescript, nodejs, npm package, subnet, cidr, ipv4, ipv6, isPrivate, isPublic, zero dependency, esm, commonjs" />
+  <meta name="author" content="Deni Irawan Nugraha" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://node-ip-ts.vercel.app" />
+
+  <!-- ═══ Open Graph (Facebook, LinkedIn) ═══ -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://node-ip-ts.vercel.app" />
+  <meta property="og:title" content="node-ip-ts — Type-safe IP Address Utility Library for Node.js" />
+  <meta property="og:description" content="A modern, zero-dependency TypeScript rewrite of the ip package. Full ESM + CJS support, strict types, and drop-in API compatibility." />
+  <meta property="og:image" content="https://node-ip-ts.vercel.appog-image.png" />
+  <meta property="og:site_name" content="node-ip-ts" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- ═══ Twitter Card ═══ -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://node-ip-ts.vercel.app" />
+  <meta name="twitter:title" content="node-ip-ts — Type-safe IP Address Utility Library for Node.js" />
+  <meta name="twitter:description" content="A modern, zero-dependency TypeScript rewrite of the ip package. Full ESM + CJS support, strict types, and drop-in API compatibility." />
+  <meta name="twitter:image" content="https://node-ip-ts.vercel.appog-image.png" />
+
+  <!-- ═══ Schema.org Structured Data (SoftwareApplication) ═══ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "node-ip-ts",
+    "url": "https://node-ip-ts.vercel.app",
+    "description": "A modern, type-safe IP address utility library for Node.js — a full TypeScript rewrite of the ip package with zero external dependencies, ESM and CJS support.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Node.js ≥ 16",
+    "programmingLanguage": "TypeScript",
+    "softwareVersion": "1.2.3",
+    "license": "https://opensource.org/licenses/MIT",
+    "author": {
+      "@type": "Person",
+      "name": "Deni Irawan Nugraha",
+      "url": "https://github.com/denycode-dev"
+    },
+    "codeRepository": "https://github.com/denycode-dev/ip-ts",
+    "downloadUrl": "https://www.npmjs.com/package/node-ip-ts",
+    "keywords": ["ip address", "typescript", "nodejs", "subnet", "cidr", "ipv4", "ipv6", "npm package"],
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <!-- ═══ Schema.org BreadcrumbList ═══ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://node-ip-ts.vercel.app" },
+      { "@type": "ListItem", "position": 2, "name": "API Reference", "item": "https://node-ip-ts.vercel.app#api" }
+    ]
+  }
+  </script>
+
+  <!-- ═══ Schema.org FAQPage ═══ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is node-ip-ts?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "node-ip-ts is a full TypeScript rewrite of the popular ip npm package, providing type-safe IP address utilities for Node.js with zero external dependencies, ES Module and CommonJS support."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is node-ip-ts a drop-in replacement for the ip package?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. node-ip-ts is designed to be a drop-in replacement. All function names and behaviors are identical to the original ip package. Simply swap the import from require('ip') to require('node-ip-ts')."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does node-ip-ts work in the browser?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "All functions except address() work in both Node.js and browser/bundler environments (Vite, webpack, esbuild, etc.). The address() function requires the Node.js os module and is not available in browsers."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ═══ Fonts ═══ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- ═══ Tailwind (must come BEFORE Font Awesome so preflight doesn't override FA) ═══ -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- ═══ Font Awesome 6 (loaded AFTER Tailwind) ═══ -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Sora', 'sans-serif'],
+            mono: ['IBM Plex Mono', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --grid-color: rgba(14, 165, 233, 0.06);
+      --glow: rgba(0, 168, 240, 0.15);
+    }
+    .dark {
+      --bg: #080d12;
+      --surface: #0d1520;
+      --surface-2: #121d2b;
+      --border: rgba(255,255,255,0.07);
+      --text: #e8f1f8;
+      --muted: #6b8099;
+      --code-bg: #0a1520;
+    }
+    html:not(.dark) {
+      --bg: #f5f8fb;
+      --surface: #ffffff;
+      --surface-2: #eef3f8;
+      --border: rgba(0,0,0,0.08);
+      --text: #0d1a26;
+      --muted: #5a7a99;
+      --code-bg: #e8f1f9;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Sora', sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .grid-bg {
+      background-image:
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .card { background: var(--surface); border: 1px solid var(--border); transition: background 0.3s, border 0.3s; }
+    .text-muted { color: var(--muted); }
+    .border-subtle { border-color: var(--border); }
+    pre {
+      background: var(--code-bg) !important;
+      border: 1px solid var(--border);
+      font-family: 'IBM Plex Mono', monospace;
+      transition: background 0.3s;
+    }
+    .token-keyword { color: #00a8f0; }
+    .token-string  { color: #4ec994; }
+    .token-comment { color: var(--muted); }
+    .token-fn      { color: #f4a261; }
+    .token-num     { color: #c084fc; }
+    .hero-glow { background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(0,168,240,0.12) 0%, transparent 70%); }
+    .nav-blur {
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(8, 13, 18, 0.85);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+    html:not(.dark) .nav-blur { background: rgba(245, 248, 251, 0.88); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .animate-fadeup { animation: fadeUp 0.6s ease both; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+    .badge {
+      background: rgba(0,168,240,0.1);
+      border: 1px solid rgba(0,168,240,0.25);
+      color: #00a8f0;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+    .badge-green { background: rgba(78,201,148,0.1); border: 1px solid rgba(78,201,148,0.25); color: #4ec994; }
+    .badge-red   { background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.25); color: #f87171; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { padding: 10px 16px; border-bottom: 1px solid var(--border); font-size: 0.875rem; }
+    th { color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; text-align: left; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(0,168,240,0.02); }
+    .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: #00a8f0; }
+    .method-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; transition: all 0.2s; }
+    .method-card:hover { border-color: rgba(0,168,240,0.3); box-shadow: 0 4px 20px rgba(0,168,240,0.07); }
+    .method-name { font-family: 'IBM Plex Mono', monospace; color: #f4a261; font-size: 0.9rem; font-weight: 500; }
+    .method-sig  { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--muted); }
+    .live-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ec994; animation: pulse-dot 2s ease-in-out infinite; }
+    .tab-active   { background: rgba(0,168,240,0.1); color: #00a8f0; border-bottom: 2px solid #00a8f0; }
+    .tab-inactive { color: var(--muted); border-bottom: 2px solid transparent; }
+    hr { border-color: var(--border); }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(0,168,240,0.3); border-radius: 99px; }
+    /* ── Font Awesome: ensure never overridden by Tailwind preflight ── */
+    .fa-solid, .fas { font-family: "Font Awesome 6 Free" !important; font-weight: 900 !important; font-style: normal !important; }
+    .fa-regular, .far { font-family: "Font Awesome 6 Free" !important; font-weight: 400 !important; font-style: normal !important; }
+    .fa-brands, .fab { font-family: "Font Awesome 6 Brands" !important; font-weight: 400 !important; font-style: normal !important; }
+    /* FA icon sizing helpers */
+    .fa-icon-sm { font-size: 0.8rem; }
+    .fa-icon-xs { font-size: 0.7rem; }
+    /* Hero stat cards */
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+    }
+    .stat-card:hover { border-color: rgba(0,168,240,0.3); box-shadow: 0 4px 16px rgba(0,168,240,0.08); }
+    .stat-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .stat-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+    .stat-value { font-family: 'IBM Plex Mono', monospace; font-size: 0.88rem; font-weight: 600; color: var(--text); margin-top: 1px; }
+  </style>
+</head>
+
+<body class="min-h-screen">
+
+<!-- ═══════════════════════════════════════════════════════════
+     SKIP NAVIGATION (Accessibility)
+════════════════════════════════════════════════════════════ -->
+<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-[#00a8f0] focus:text-white focus:rounded-lg text-sm font-medium">
+  Skip to main content
+</a>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HEADER / NAVBAR
+════════════════════════════════════════════════════════════ -->
+<header role="banner">
+  <nav class="nav-blur fixed top-0 left-0 right-0 z-50" role="navigation" aria-label="Main navigation">
+    <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+
+      <!-- Logo / Brand -->
+      <a href="/" class="flex items-center gap-3" aria-label="node-ip-ts home">
+        <span class="font-mono text-sm font-semibold" style="color:var(--text)">
+          <span style="color:#00a8f0">ip</span>-ts
+        </span>
+        <span class="badge" aria-label="Version 1.2.3">v1.2.3</span>
+      </a>
+
+      <!-- Primary nav links -->
+      <nav class="hidden md:flex items-center gap-6 text-sm text-muted" aria-label="Documentation sections">
+        <a href="#install"    class="hover:text-[#00a8f0] transition-colors"><i class="fa-solid fa-box-archive fa-icon-xs mr-1" aria-hidden="true"></i>Install</a>
+        <a href="#quickstart" class="hover:text-[#00a8f0] transition-colors"><i class="fa-solid fa-bolt fa-icon-xs mr-1" aria-hidden="true"></i>Quick Start</a>
+        <a href="#api"        class="hover:text-[#00a8f0] transition-colors"><i class="fa-solid fa-code fa-icon-xs mr-1" aria-hidden="true"></i>API</a>
+        <a href="#compare"    class="hover:text-[#00a8f0] transition-colors"><i class="fa-solid fa-scale-balanced fa-icon-xs mr-1" aria-hidden="true"></i>Compare</a>
+        <a href="#types"      class="hover:text-[#00a8f0] transition-colors"><i class="fa-solid fa-file-code fa-icon-xs mr-1" aria-hidden="true"></i>Types</a>
+      </nav>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-3">
+        <!-- Theme toggle -->
+        <button onclick="toggleTheme()" aria-label="Toggle light/dark theme"
+          class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-[rgba(0,168,240,0.1)] transition-colors">
+          <i id="iconSun"  class="fa-solid fa-sun  hidden text-sm" aria-hidden="true"></i>
+          <i id="iconMoon" class="fa-solid fa-moon text-sm"         aria-hidden="true"></i>
+        </button>
+        <!-- GitHub -->
+        <a href="https://github.com/denycode-dev/ip-ts" target="_blank" rel="noopener noreferrer"
+          aria-label="View node-ip-ts on GitHub (opens in new tab)"
+          class="flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 rounded-md border border-subtle hover:border-[rgba(0,168,240,0.4)] transition-colors text-muted hover:text-[#00a8f0]">
+          <i class="fa-brands fa-github fa-icon-sm" aria-hidden="true"></i>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MAIN CONTENT
+════════════════════════════════════════════════════════════ -->
+<main id="main-content" role="main">
+
+  <!-- ── HERO ── -->
+  <section class="relative pt-32 pb-24 px-6 grid-bg overflow-hidden" aria-labelledby="hero-heading">
+    <div class="hero-glow absolute inset-0 pointer-events-none" aria-hidden="true"></div>
+    <div class="max-w-4xl mx-auto text-center relative">
+
+      <div class="animate-fadeup inline-flex items-center gap-2 mb-6">
+        <div class="live-dot" aria-hidden="true"></div>
+        <span class="badge badge-green">
+          <i class="fa-solid fa-circle-check fa-icon-xs mr-1" aria-hidden="true"></i>
+          zero dependencies · strict TypeScript · ESM + CJS
+        </span>
+      </div>
+
+      <!-- ASCII logo — decorative, hidden from screen readers -->
+      <div class="animate-fadeup delay-1 font-mono text-[0.58rem] sm:text-xs leading-tight mb-8 opacity-50 select-none" style="color:#00a8f0" aria-hidden="true">
+<pre class="inline-block text-left">  ___ ____       _____ ____
+ |_ _|  _ \     |_   _/ ___|
+  | || |_) |_____| | \___ \
+  | ||  __/_____| |  ___) |
+ |___|_|        |_| |____/</pre>
+      </div>
+
+      <h1 id="hero-heading" class="animate-fadeup delay-2 font-sans font-extrabold text-5xl sm:text-7xl tracking-tight mb-5 leading-none" style="color:var(--text)" itemprop="name">
+        <span class="font-mono" style="color:#00a8f0">node-ip-ts</span>
+      </h1>
+
+      <p class="animate-fadeup delay-3 text-base sm:text-lg mb-3 font-light max-w-xl mx-auto leading-relaxed" style="color:var(--muted)" itemprop="description">
+        A modern, type-safe IP address utility library for Node.js — a full TypeScript rewrite of the popular
+        <code class="font-mono text-sm bg-[rgba(0,168,240,0.1)] text-[#00a8f0] px-1.5 py-0.5 rounded">ip</code> package.
+      </p>
+
+      <!-- Stat cards (replaces shield.io images) -->
+      <div class="animate-fadeup delay-4 flex flex-wrap items-center justify-center gap-3 mt-6 mb-10" aria-label="Package statistics">
+
+        <a href="https://www.npmjs.com/package/node-ip-ts" target="_blank" rel="noopener noreferrer" class="stat-card" aria-label="View on npm">
+          <div class="stat-icon" style="background:rgba(204,0,0,0.12);">
+            <i class="fa-brands fa-npm" style="color:#cc0000;" aria-hidden="true"></i>
+          </div>
+          <div>
+            <div class="stat-label">npm version</div>
+            <div class="stat-value">latest</div>
+          </div>
+        </a>
+
+        <a href="https://www.npmjs.com/package/node-ip-ts" target="_blank" rel="noopener noreferrer" class="stat-card" aria-label="Weekly downloads">
+          <div class="stat-icon" style="background:rgba(0,168,240,0.12);">
+            <i class="fa-solid fa-arrow-trend-up" style="color:#00a8f0;" aria-hidden="true"></i>
+          </div>
+          <div>
+            <div class="stat-label">weekly downloads</div>
+            <div class="stat-value">growing</div>
+          </div>
+        </a>
+
+        <a href="https://github.com/denycode-dev/ip-ts/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="stat-card" aria-label="MIT License">
+          <div class="stat-icon" style="background:rgba(78,201,148,0.12);">
+            <i class="fa-solid fa-scale-balanced" style="color:#4ec994;" aria-hidden="true"></i>
+          </div>
+          <div>
+            <div class="stat-label">license</div>
+            <div class="stat-value">MIT</div>
+          </div>
+        </a>
+
+        <div class="stat-card" aria-label="Zero external dependencies">
+          <div class="stat-icon" style="background:rgba(192,132,252,0.12);">
+            <i class="fa-solid fa-feather" style="color:#c084fc;" aria-hidden="true"></i>
+          </div>
+          <div>
+            <div class="stat-label">dependencies</div>
+            <div class="stat-value">0</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CTAs -->
+      <div class="animate-fadeup delay-5 flex items-center justify-center gap-3 flex-wrap">
+        <a href="#install" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium text-white transition-all"
+          style="background:#00a8f0;box-shadow:0 0 20px rgba(0,168,240,0.35)">
+          <i class="fa-solid fa-rocket" aria-hidden="true"></i>
+          Get Started
+        </a>
+        <a href="#api" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium border border-subtle hover:border-[rgba(0,168,240,0.4)] transition-colors text-muted hover:text-[#00a8f0]">
+          <i class="fa-solid fa-book-open" aria-hidden="true"></i>
+          View API Reference
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FEATURE HIGHLIGHTS ── -->
+  <section class="px-6 pb-20" aria-labelledby="features-heading">
+    <div class="max-w-3xl mx-auto">
+      <h2 id="features-heading" class="sr-only">Key Features</h2>
+      <div class="grid sm:grid-cols-3 gap-4">
+        <article class="card rounded-xl p-5 text-center">
+          <i class="fa-brands fa-js text-2xl mb-3 block" style="color:#00a8f0" aria-hidden="true"></i>
+          <h3 class="font-semibold text-sm mb-1" style="color:var(--text)">TypeScript Native</h3>
+          <p class="text-xs text-muted">Full <code>.d.ts</code> declarations with strict null checks out of the box.</p>
+        </article>
+        <article class="card rounded-xl p-5 text-center">
+          <i class="fa-solid fa-cubes text-2xl mb-3 block" style="color:#4ec994" aria-hidden="true"></i>
+          <h3 class="font-semibold text-sm mb-1" style="color:var(--text)">ESM + CJS</h3>
+          <p class="text-xs text-muted">Ships both ES Modules and CommonJS builds for any environment.</p>
+        </article>
+        <article class="card rounded-xl p-5 text-center">
+          <i class="fa-solid fa-feather text-2xl mb-3 block" style="color:#c084fc" aria-hidden="true"></i>
+          <h3 class="font-semibold text-sm mb-1" style="color:var(--text)">Zero Dependencies</h3>
+          <p class="text-xs text-muted">No runtime dependencies. Lightweight and safe to ship to production.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── INSTALLATION ── -->
+  <section id="install" class="px-6 py-20" aria-labelledby="install-heading">
+    <div class="max-w-3xl mx-auto">
+      <p class="section-tag mb-3"><i class="fa-solid fa-box-archive mr-1" aria-hidden="true"></i>Installation</p>
+      <h2 id="install-heading" class="text-2xl font-semibold mb-8" style="color:var(--text)">Get up and running in seconds</h2>
+
+      <div class="flex gap-0 mb-0 border-b border-subtle font-mono text-sm" role="tablist" aria-label="Package manager">
+        <button role="tab" aria-selected="true"  aria-controls="code-npm"  onclick="showTab('npm')"  id="tab-npm"  class="px-4 py-2 tab-active text-xs">npm</button>
+        <button role="tab" aria-selected="false" aria-controls="code-pnpm" onclick="showTab('pnpm')" id="tab-pnpm" class="px-4 py-2 tab-inactive text-xs">pnpm</button>
+        <button role="tab" aria-selected="false" aria-controls="code-yarn" onclick="showTab('yarn')" id="tab-yarn" class="px-4 py-2 tab-inactive text-xs">yarn</button>
+      </div>
+
+      <pre id="code-npm"  role="tabpanel" aria-labelledby="tab-npm"  class="rounded-b-lg rounded-tr-lg p-5 text-sm leading-relaxed overflow-x-auto block"><span class="token-keyword">npm</span> install <span class="token-string">node-ip-ts</span></pre>
+      <pre id="code-pnpm" role="tabpanel" aria-labelledby="tab-pnpm" class="rounded-b-lg rounded-tr-lg p-5 text-sm leading-relaxed overflow-x-auto hidden"><span class="token-keyword">pnpm</span> add <span class="token-string">node-ip-ts</span></pre>
+      <pre id="code-yarn" role="tabpanel" aria-labelledby="tab-yarn" class="rounded-b-lg rounded-tr-lg p-5 text-sm leading-relaxed overflow-x-auto hidden"><span class="token-keyword">yarn</span> add <span class="token-string">node-ip-ts</span></pre>
+
+      <p class="mt-4 text-sm text-muted">
+        <i class="fa-solid fa-circle-info mr-1" aria-hidden="true"></i>
+        Requires Node.js ≥ 16
+      </p>
+    </div>
+  </section>
+
+  <!-- ── QUICK START ── -->
+  <section id="quickstart" class="px-6 py-20" aria-labelledby="quickstart-heading">
+    <div class="max-w-3xl mx-auto">
+      <p class="section-tag mb-3"><i class="fa-solid fa-bolt mr-1" aria-hidden="true"></i>Quick Start</p>
+      <h2 id="quickstart-heading" class="text-2xl font-semibold mb-8" style="color:var(--text)">Three ways to import</h2>
+
+      <div class="grid gap-4">
+        <article class="method-card p-5">
+          <header class="mb-3"><span class="badge"><i class="fa-brands fa-node-js mr-1" aria-hidden="true"></i>ESM / TypeScript</span></header>
+          <pre class="rounded-lg p-4 text-sm leading-relaxed overflow-x-auto"><span class="token-keyword">import</span> * <span class="token-keyword">as</span> ip <span class="token-keyword">from</span> <span class="token-string">'node-ip-ts'</span>;
+
+<span class="token-comment">// Address classification</span>
+ip.<span class="token-fn">isPrivate</span>(<span class="token-string">'192.168.1.1'</span>);   <span class="token-comment">// true</span>
+ip.<span class="token-fn">isPublic</span>(<span class="token-string">'8.8.8.8'</span>);        <span class="token-comment">// true</span>
+ip.<span class="token-fn">isLoopback</span>(<span class="token-string">'127.0.0.1'</span>);    <span class="token-comment">// true</span>
+
+<span class="token-comment">// Subnet operations</span>
+ip.<span class="token-fn">cidr</span>(<span class="token-string">'192.168.1.134/26'</span>);   <span class="token-comment">// '192.168.1.128'</span>
+<span class="token-keyword">const</span> subnet = ip.<span class="token-fn">cidrSubnet</span>(<span class="token-string">'192.168.1.134/26'</span>);
+subnet.<span class="token-fn">contains</span>(<span class="token-string">'192.168.1.180'</span>);  <span class="token-comment">// true</span>
+
+<span class="token-comment">// Conversion</span>
+ip.<span class="token-fn">toLong</span>(<span class="token-string">'255.255.255.255'</span>);  <span class="token-comment">// 4294967295</span>
+ip.<span class="token-fn">fromLong</span>(<span class="token-num">4294967295</span>);       <span class="token-comment">// '255.255.255.255'</span></pre>
+        </article>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <article class="method-card p-5">
+            <header class="mb-3"><span class="badge"><i class="fa-solid fa-tree mr-1" aria-hidden="true"></i>Named Imports (tree-shakeable)</span></header>
+            <pre class="rounded-lg p-4 text-xs leading-relaxed overflow-x-auto"><span class="token-keyword">import</span> {
+  isPrivate,
+  cidrSubnet,
+  toLong
+} <span class="token-keyword">from</span> <span class="token-string">'node-ip-ts'</span>;</pre>
+          </article>
+          <article class="method-card p-5">
+            <header class="mb-3"><span class="badge"><i class="fa-solid fa-gear mr-1" aria-hidden="true"></i>CommonJS</span></header>
+            <pre class="rounded-lg p-4 text-xs leading-relaxed overflow-x-auto"><span class="token-keyword">const</span> ip = <span class="token-fn">require</span>(<span class="token-string">'node-ip-ts'</span>);
+
+ip.<span class="token-fn">isPrivate</span>(<span class="token-string">'10.0.0.1'</span>);
+<span class="token-comment">// true</span></pre>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── COMPARISON ── -->
+  <section id="compare" class="px-6 py-20" aria-labelledby="compare-heading">
+    <div class="max-w-3xl mx-auto">
+      <p class="section-tag mb-3"><i class="fa-solid fa-scale-balanced mr-1" aria-hidden="true"></i>Comparison</p>
+      <h2 id="compare-heading" class="text-2xl font-semibold mb-2" style="color:var(--text)">Why switch from <code class="font-mono text-xl">ip</code>?</h2>
+      <p class="text-muted text-sm mb-8">Drop-in replacement with full TypeScript support and ES Module compatibility.</p>
+
+      <div class="card rounded-xl overflow-hidden">
+        <table aria-label="Feature comparison between ip and node-ip-ts">
+          <thead>
+            <tr>
+              <th scope="col">Feature</th>
+              <th scope="col" class="text-center"><code class="font-mono">ip</code></th>
+              <th scope="col" class="text-center"><code class="font-mono" style="color:#00a8f0">node-ip-ts</code></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>TypeScript support</td><td class="text-center"><span class="badge badge-red"><i class="fa-solid fa-xmark mr-1" aria-hidden="true"></i>No</span></td><td class="text-center"><span class="badge badge-green"><i class="fa-solid fa-check mr-1" aria-hidden="true"></i>Yes</span></td></tr>
+            <tr><td>ES Module support</td><td class="text-center"><span class="badge badge-red"><i class="fa-solid fa-xmark mr-1" aria-hidden="true"></i>No</span></td><td class="text-center"><span class="badge badge-green"><i class="fa-solid fa-check mr-1" aria-hidden="true"></i>Yes</span></td></tr>
+            <tr><td>CommonJS support</td><td class="text-center"><span class="badge badge-green"><i class="fa-solid fa-check mr-1" aria-hidden="true"></i>Yes</span></td><td class="text-center"><span class="badge badge-green"><i class="fa-solid fa-check mr-1" aria-hidden="true"></i>Yes</span></td></tr>
+            <tr><td>Type declarations (.d.ts)</td><td class="text-center"><span class="badge badge-red"><i class="fa-solid fa-xmark mr-1" aria-hidden="true"></i>No</span></td><td class="text-center"><span class="badge badge-green"><i class="fa-solid fa-check mr-1" aria-hidden="true"></i>Yes</span></td></tr>
+            <tr><td>Strict null checks</td><td class="text-center"><span class="badge badge-red"><i class="fa-solid fa-xmark mr-1" aria-hidden="true"></i>No</span></td><td class="text-center"><span class="badge badge-green"><i class="fa-solid fa-check mr-1" aria-hidden="true"></i>Yes</span></td></tr>
+            <tr><td>External dependencies</td><td class="text-center"><span class="font-mono text-sm">0</span></td><td class="text-center"><span class="font-mono text-sm">0</span></td></tr>
+            <tr><td>API compatibility</td><td class="text-center"><span class="text-muted text-sm">—</span></td><td class="text-center"><span class="badge badge-green"><i class="fa-solid fa-plug mr-1" aria-hidden="true"></i>Drop-in</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-6 card rounded-xl p-5">
+        <p class="section-tag text-xs mb-3"><i class="fa-solid fa-right-left mr-1" aria-hidden="true"></i>Migration</p>
+        <pre class="text-sm leading-relaxed overflow-x-auto"><span class="token-comment" style="text-decoration:line-through">- const ip = require('ip');</span>
+<span class="token-string">+ const ip = require('node-ip-ts');</span>
+
+<span class="token-comment">// Or for TypeScript / ESM:</span>
+<span class="token-keyword">import</span> * <span class="token-keyword">as</span> ip <span class="token-keyword">from</span> <span class="token-string">'node-ip-ts'</span>;</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BROWSER COMPATIBILITY ── -->
+  <section class="px-6 py-20" aria-labelledby="browser-heading">
+    <div class="max-w-3xl mx-auto">
+      <p class="section-tag mb-3"><i class="fa-solid fa-globe mr-1" aria-hidden="true"></i>Browser Compatibility</p>
+      <h2 id="browser-heading" class="text-2xl font-semibold mb-2" style="color:var(--text)">Works everywhere — almost</h2>
+      <p class="text-muted text-sm mb-8">
+        All functions except <code class="font-mono text-xs bg-[rgba(0,168,240,0.1)] text-[#00a8f0] px-1 rounded">address()</code>
+        work in browser and bundler environments (Vite, webpack, esbuild…).
+      </p>
+      <div class="card rounded-xl overflow-hidden">
+        <table aria-label="Browser and Node.js compatibility">
+          <thead>
+            <tr>
+              <th scope="col">Function</th>
+              <th scope="col" class="text-center"><i class="fa-brands fa-node-js mr-1" aria-hidden="true"></i>Node.js</th>
+              <th scope="col" class="text-center"><i class="fa-solid fa-browser mr-1" aria-hidden="true"></i>Browser / Bundler</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="font-mono text-sm">All IP / subnet / bitwise functions</td><td class="text-center"><span class="badge badge-green"><i class="fa-solid fa-check" aria-hidden="true"></i></span></td><td class="text-center"><span class="badge badge-green"><i class="fa-solid fa-check" aria-hidden="true"></i></span></td></tr>
+            <tr><td class="font-mono text-sm">loopback()</td><td class="text-center"><span class="badge badge-green"><i class="fa-solid fa-check" aria-hidden="true"></i></span></td><td class="text-center"><span class="badge badge-green"><i class="fa-solid fa-check" aria-hidden="true"></i></span></td></tr>
+            <tr><td class="font-mono text-sm">address()</td><td class="text-center"><span class="badge badge-green"><i class="fa-solid fa-check" aria-hidden="true"></i></span></td><td class="text-center"><span class="badge badge-red"><i class="fa-solid fa-xmark mr-1" aria-hidden="true"></i>uses os module</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════
+       API REFERENCE
+  ═══════════════════════════════════════════════════════════ -->
+  <section id="api" class="px-6 py-20" aria-labelledby="api-heading">
+    <div class="max-w-3xl mx-auto">
+      <p class="section-tag mb-3"><i class="fa-solid fa-code mr-1" aria-hidden="true"></i>API Reference</p>
+      <h2 id="api-heading" class="text-2xl font-semibold mb-10" style="color:var(--text)">Complete function reference</h2>
+
+      <!-- ─ Address Classification ─ -->
+      <section aria-labelledby="api-classification">
+        <h3 id="api-classification" class="text-base font-semibold mb-5 flex items-center gap-2" style="color:var(--text)">
+          <span class="w-1.5 h-5 rounded-sm inline-block" style="background:#00a8f0" aria-hidden="true"></span>
+          <i class="fa-solid fa-magnifying-glass text-[#00a8f0] fa-icon-sm" aria-hidden="true"></i>
+          Address Classification
+        </h3>
+        <div class="space-y-4 mb-12">
+
+          <article class="method-card p-5">
+            <header>
+              <div class="method-name mb-1">isPrivate</div>
+              <div class="method-sig mb-3">(addr: string): boolean</div>
+            </header>
+            <p class="text-sm text-muted mb-4">
+              Returns <code class="font-mono text-xs bg-[rgba(0,168,240,0.1)] text-[#00a8f0] px-1 rounded">true</code>
+              if the address falls within any private/reserved range: RFC 1918, link-local, IPv6 ULA, IPv6 link-local, loopback.
+            </p>
+            <pre class="rounded-lg p-4 text-xs leading-relaxed overflow-x-auto">ip.<span class="token-fn">isPrivate</span>(<span class="token-string">'192.168.0.1'</span>);           <span class="token-comment">// true</span>
+ip.<span class="token-fn">isPrivate</span>(<span class="token-string">'fd12:3456:789a:1::1'</span>);   <span class="token-comment">// true  (IPv6 ULA)</span>
+ip.<span class="token-fn">isPrivate</span>(<span class="token-string">'::ffff:192.168.0.1'</span>);    <span class="token-comment">// true  (IPv4-mapped IPv6)</span>
+ip.<span class="token-fn">isPrivate</span>(<span class="token-string">'8.8.8.8'</span>);               <span class="token-comment">// false</span></pre>
+          </article>
+
+          <article class="method-card p-5">
+            <header>
+              <div class="method-name mb-1">isPublic</div>
+              <div class="method-sig mb-3">(addr: string): boolean</div>
+            </header>
+            <p class="text-sm text-muted mb-4">
+              Inverse of <code class="font-mono text-xs bg-[rgba(0,168,240,0.1)] text-[#00a8f0] px-1 rounded">isPrivate</code>.
+              Returns <code class="font-mono text-xs bg-[rgba(78,201,148,0.1)] text-[#4ec994] px-1 rounded">true</code> for publicly routable addresses.
+            </p>
+            <pre class="rounded-lg p-4 text-xs leading-relaxed overflow-x-auto">ip.<span class="token-fn">isPublic</span>(<span class="token-string">'1.1.1.1'</span>);   <span class="token-comment">// true</span>
+ip.<span class="token-fn">isPublic</span>(<span class="token-string">'10.0.0.1'</span>); <span class="token-comment">// false</span></pre>
+          </article>
+
+          <article class="method-card p-5">
+            <header>
+              <div class="method-name mb-1">isLoopback</div>
+              <div class="method-sig mb-3">(addr: string): boolean</div>
+            </header>
+            <p class="text-sm text-muted mb-4">
+              Returns <code class="font-mono text-xs bg-[rgba(0,168,240,0.1)] text-[#00a8f0] px-1 rounded">true</code>
+              for loopback addresses. Supports dotted-decimal, octal, hexadecimal, and long-integer notation.
+            </p>
+            <pre class="rounded-lg p-4 text-xs leading-relaxed overflow-x-auto">ip.<span class="token-fn">isLoopback</span>(<span class="token-string">'127.0.0.1'</span>);  <span class="token-comment">// true</span>
+ip.<span class="token-fn">isLoopback</span>(<span class="token-string">'::1'</span>);          <span class="token-comment">// true</span>
+ip.<span class="token-fn">isLoopback</span>(<span class="token-string">'0x7f.0.0.1'</span>);   <span class="token-comment">// true  (hex)</span>
+ip.<span class="token-fn">isLoopback</span>(<span class="token-string">'0177.0.0.1'</span>);   <span class="token-comment">// true  (octal)</span>
+ip.<span class="token-fn">isLoopback</span>(<span class="token-string">'2130706433'</span>);   <span class="token-comment">// true  (integer)</span></pre>
+          </article>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <article class="method-card p-5">
+              <header>
+                <div class="method-name mb-1">isV4Format</div>
+                <div class="method-sig mb-3">(ip: string): boolean</div>
+              </header>
+              <pre class="rounded-lg p-3 text-xs leading-relaxed overflow-x-auto">ip.<span class="token-fn">isV4Format</span>(<span class="token-string">'192.168.0.1'</span>); <span class="token-comment">// true</span>
+ip.<span class="token-fn">isV4Format</span>(<span class="token-string">'::1'</span>);          <span class="token-comment">// false</span></pre>
+            </article>
+            <article class="method-card p-5">
+              <header>
+                <div class="method-name mb-1">isV6Format</div>
+                <div class="method-sig mb-3">(ip: string): boolean</div>
+              </header>
+              <pre class="rounded-lg p-3 text-xs leading-relaxed overflow-x-auto">ip.<span class="token-fn">isV6Format</span>(<span class="token-string">'::1'</span>);              <span class="token-comment">// true</span>
+ip.<span class="token-fn">isV6Format</span>(<span class="token-string">'192.168.0.1'</span>); <span class="token-comment">// false</span></pre>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─ Subnet & CIDR ─ -->
+      <section aria-labelledby="api-subnet">
+        <h3 id="api-subnet" class="text-base font-semibold mb-5 flex items-center gap-2" style="color:var(--text)">
+          <span class="w-1.5 h-5 rounded-sm inline-block" style="background:#f4a261" aria-hidden="true"></span>
+          <i class="fa-solid fa-network-wired text-[#f4a261] fa-icon-sm" aria-hidden="true"></i>
+          Subnet &amp; CIDR
+        </h3>
+        <div class="space-y-4 mb-12">
+
+          <article class="method-card p-5">
+            <header>
+              <div class="method-name mb-1">cidr</div>
+              <div class="method-sig mb-3">(cidrString: string): string</div>
+            </header>
+            <p class="text-sm text-muted mb-4">Returns the network address for a given CIDR string.</p>
+            <pre class="rounded-lg p-4 text-xs leading-relaxed overflow-x-auto">ip.<span class="token-fn">cidr</span>(<span class="token-string">'192.168.1.134/26'</span>);        <span class="token-comment">// '192.168.1.128'</span>
+ip.<span class="token-fn">cidr</span>(<span class="token-string">'2607:f0d0:1002:51::4/56'</span>); <span class="token-comment">// '2607:f0d0:1002::'</span></pre>
+          </article>
+
+          <article class="method-card p-5">
+            <header>
+              <div class="method-name mb-1">cidrSubnet</div>
+              <div class="method-sig mb-3">(cidrString: string): SubnetInfo</div>
+            </header>
+            <p class="text-sm text-muted mb-4">
+              Returns a full <code class="font-mono text-xs bg-[rgba(0,168,240,0.1)] text-[#00a8f0] px-1 rounded">SubnetInfo</code> object for a given CIDR string.
+            </p>
+            <pre class="rounded-lg p-4 text-xs leading-relaxed overflow-x-auto"><span class="token-keyword">const</span> s = ip.<span class="token-fn">cidrSubnet</span>(<span class="token-string">'192.168.1.134/26'</span>);
+
+s.networkAddress;    <span class="token-comment">// '192.168.1.128'</span>
+s.firstAddress;      <span class="token-comment">// '192.168.1.129'</span>
+s.lastAddress;       <span class="token-comment">// '192.168.1.190'</span>
+s.broadcastAddress;  <span class="token-comment">// '192.168.1.191'</span>
+s.subnetMask;        <span class="token-comment">// '255.255.255.192'</span>
+s.subnetMaskLength;  <span class="token-comment">// 26</span>
+s.numHosts;          <span class="token-comment">// 62</span>
+s.length;            <span class="token-comment">// 64</span>
+s.<span class="token-fn">contains</span>(<span class="token-string">'192.168.1.150'</span>); <span class="token-comment">// true</span>
+s.<span class="token-fn">contains</span>(<span class="token-string">'192.168.1.200'</span>); <span class="token-comment">// false</span></pre>
+          </article>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <article class="method-card p-5">
+              <header>
+                <div class="method-name mb-1">subnet</div>
+                <div class="method-sig mb-3">(addr, mask): SubnetInfo</div>
+              </header>
+              <p class="text-xs text-muted mb-3">Same as <code class="font-mono text-xs">cidrSubnet</code> but takes address and mask separately.</p>
+              <pre class="rounded-lg p-3 text-xs leading-relaxed overflow-x-auto">ip.<span class="token-fn">subnet</span>(
+  <span class="token-string">'192.168.1.134'</span>,
+  <span class="token-string">'255.255.255.192'</span>
+);</pre>
+            </article>
+            <article class="method-card p-5">
+              <header>
+                <div class="method-name mb-1">mask</div>
+                <div class="method-sig mb-3">(addr, mask): string</div>
+              </header>
+              <p class="text-xs text-muted mb-3">Applies a subnet mask via bitwise AND.</p>
+              <pre class="rounded-lg p-3 text-xs leading-relaxed overflow-x-auto">ip.<span class="token-fn">mask</span>(
+  <span class="token-string">'192.168.1.134'</span>,
+  <span class="token-string">'255.255.255.0'</span>
+); <span class="token-comment">// '192.168.1.0'</span></pre>
+            </article>
+          </div>
+
+          <article class="method-card p-5">
+            <header>
+              <div class="method-name mb-1">fromPrefixLen</div>
+              <div class="method-sig mb-3">(prefixlen: number, family?: string | number): string</div>
+            </header>
+            <p class="text-sm text-muted mb-4">Converts a prefix length to a subnet mask string. Auto-detects IPv6 for values &gt; 32.</p>
+            <pre class="rounded-lg p-4 text-xs leading-relaxed overflow-x-auto">ip.<span class="token-fn">fromPrefixLen</span>(<span class="token-num">24</span>);         <span class="token-comment">// '255.255.255.0'</span>
+ip.<span class="token-fn">fromPrefixLen</span>(<span class="token-num">64</span>);         <span class="token-comment">// 'ffff:ffff:ffff:ffff::'</span>
+ip.<span class="token-fn">fromPrefixLen</span>(<span class="token-num">24</span>, <span class="token-string">'ipv6'</span>); <span class="token-comment">// 'ffff:ff00::'</span></pre>
+          </article>
+        </div>
+      </section>
+
+      <!-- ─ Bitwise ─ -->
+      <section aria-labelledby="api-bitwise">
+        <h3 id="api-bitwise" class="text-base font-semibold mb-5 flex items-center gap-2" style="color:var(--text)">
+          <span class="w-1.5 h-5 rounded-sm inline-block" style="background:#c084fc" aria-hidden="true"></span>
+          <i class="fa-solid fa-microchip text-[#c084fc] fa-icon-sm" aria-hidden="true"></i>
+          Bitwise Operations
+        </h3>
+        <div class="space-y-4 mb-12">
+          <article class="method-card p-5">
+            <header>
+              <div class="method-name mb-1">not</div>
+              <div class="method-sig mb-3">(addr: string): string</div>
+            </header>
+            <p class="text-sm text-muted mb-3">Bitwise NOT — useful for computing wildcard masks.</p>
+            <pre class="rounded-lg p-4 text-xs leading-relaxed overflow-x-auto">ip.<span class="token-fn">not</span>(<span class="token-string">'255.255.255.0'</span>);  <span class="token-comment">// '0.0.0.255'</span></pre>
+          </article>
+          <article class="method-card p-5">
+            <header>
+              <div class="method-name mb-1">or</div>
+              <div class="method-sig mb-3">(a: string, b: string): string</div>
+            </header>
+            <p class="text-sm text-muted mb-3">Bitwise OR. Supports same-protocol and mixed IPv4/IPv6 inputs.</p>
+            <pre class="rounded-lg p-4 text-xs leading-relaxed overflow-x-auto">ip.<span class="token-fn">or</span>(<span class="token-string">'0.0.0.255'</span>, <span class="token-string">'192.168.1.10'</span>);          <span class="token-comment">// '192.168.1.255'</span>
+ip.<span class="token-fn">or</span>(<span class="token-string">'::ff'</span>, <span class="token-string">'::abcd:dcba:abcd:dcba'</span>);   <span class="token-comment">// '::abcd:dcba:abcd:dcff'</span></pre>
+          </article>
+          <article class="method-card p-5">
+            <header>
+              <div class="method-name mb-1">isEqual</div>
+              <div class="method-sig mb-3">(a: string, b: string): boolean</div>
+            </header>
+            <p class="text-sm text-muted mb-3">Deep equality check, IPv4/IPv6 aware (e.g. <code class="font-mono text-xs">127.0.0.1</code> equals <code class="font-mono text-xs">::ffff:7f00:1</code>).</p>
+            <pre class="rounded-lg p-4 text-xs leading-relaxed overflow-x-auto">ip.<span class="token-fn">isEqual</span>(<span class="token-string">'127.0.0.1'</span>, <span class="token-string">'::ffff:127.0.0.1'</span>); <span class="token-comment">// true</span>
+ip.<span class="token-fn">isEqual</span>(<span class="token-string">'127.0.0.1'</span>, <span class="token-string">'::7f00:1'</span>);          <span class="token-comment">// true</span>
+ip.<span class="token-fn">isEqual</span>(<span class="token-string">'127.0.0.1'</span>, <span class="token-string">'::7f00:2'</span>);          <span class="token-comment">// false</span></pre>
+          </article>
+        </div>
+      </section>
+
+      <!-- ─ Buffer & Long ─ -->
+      <section aria-labelledby="api-buffer">
+        <h3 id="api-buffer" class="text-base font-semibold mb-5 flex items-center gap-2" style="color:var(--text)">
+          <span class="w-1.5 h-5 rounded-sm inline-block" style="background:#4ec994" aria-hidden="true"></span>
+          <i class="fa-solid fa-arrows-left-right-to-line text-[#4ec994] fa-icon-sm" aria-hidden="true"></i>
+          Buffer &amp; Long Integer Conversion
+        </h3>
+        <div class="space-y-4 mb-12">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <article class="method-card p-5">
+              <header>
+                <div class="method-name mb-1">toBuffer</div>
+                <div class="method-sig mb-3">(ip, buff?, offset?): Buffer</div>
+              </header>
+              <p class="text-xs text-muted mb-3">Converts an IP string to a raw Buffer (4 bytes IPv4, 16 for IPv6).</p>
+              <pre class="rounded-lg p-3 text-xs leading-relaxed overflow-x-auto">ip.<span class="token-fn">toBuffer</span>(<span class="token-string">'127.0.0.1'</span>);
+<span class="token-comment">// &lt;Buffer 7f 00 00 01&gt;</span></pre>
+            </article>
+            <article class="method-card p-5">
+              <header>
+                <div class="method-name mb-1">toString</div>
+                <div class="method-sig mb-3">(buff, offset?, length?): string</div>
+              </header>
+              <p class="text-xs text-muted mb-3">Converts a Buffer back to an IP address string.</p>
+              <pre class="rounded-lg p-3 text-xs leading-relaxed overflow-x-auto">ip.<span class="token-fn">toString</span>(
+  Buffer.<span class="token-fn">from</span>(<span class="token-string">'7f000001'</span>, <span class="token-string">'hex'</span>)
+); <span class="token-comment">// '127.0.0.1'</span></pre>
+            </article>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <article class="method-card p-5">
+              <header>
+                <div class="method-name mb-1">toLong</div>
+                <div class="method-sig mb-3">(ip: string): number</div>
+              </header>
+              <p class="text-xs text-muted mb-3">IPv4 address to unsigned 32-bit integer.</p>
+              <pre class="rounded-lg p-3 text-xs leading-relaxed overflow-x-auto">ip.<span class="token-fn">toLong</span>(<span class="token-string">'127.0.0.1'</span>);
+<span class="token-comment">// 2130706433</span></pre>
+            </article>
+            <article class="method-card p-5">
+              <header>
+                <div class="method-name mb-1">fromLong</div>
+                <div class="method-sig mb-3">(ipl: number): string</div>
+              </header>
+              <p class="text-xs text-muted mb-3">Unsigned 32-bit integer back to dotted-decimal.</p>
+              <pre class="rounded-lg p-3 text-xs leading-relaxed overflow-x-auto">ip.<span class="token-fn">fromLong</span>(<span class="token-num">2130706433</span>);
+<span class="token-comment">// '127.0.0.1'</span></pre>
+            </article>
+          </div>
+          <article class="method-card p-5">
+            <header>
+              <div class="method-name mb-1">normalizeToLong</div>
+              <div class="method-sig mb-3">(addr: string): number</div>
+            </header>
+            <p class="text-sm text-muted mb-4">
+              Normalizes any IPv4 notation to unsigned long.
+              Returns <code class="font-mono text-xs bg-[rgba(248,113,113,0.1)] text-[#f87171] px-1 rounded">-1</code> on invalid input.
+            </p>
+            <pre class="rounded-lg p-4 text-xs leading-relaxed overflow-x-auto">ip.<span class="token-fn">normalizeToLong</span>(<span class="token-string">'0x7f.0x0.0x0.1'</span>); <span class="token-comment">// 2130706433  (hex)</span>
+ip.<span class="token-fn">normalizeToLong</span>(<span class="token-string">'0177.0.0.01'</span>);     <span class="token-comment">// 2130706433  (octal)</span>
+ip.<span class="token-fn">normalizeToLong</span>(<span class="token-string">'0x7f000001'</span>);      <span class="token-comment">// 2130706433  (single hex)</span>
+ip.<span class="token-fn">normalizeToLong</span>(<span class="token-string">'127.1'</span>);           <span class="token-comment">// 2130706433  (compact)</span>
+ip.<span class="token-fn">normalizeToLong</span>(<span class="token-string">'256.0.0.1'</span>);       <span class="token-comment">// -1          (invalid)</span></pre>
+          </article>
+        </div>
+      </section>
+
+      <!-- ─ Network Interface ─ -->
+      <section aria-labelledby="api-network">
+        <h3 id="api-network" class="text-base font-semibold mb-5 flex items-center gap-2" style="color:var(--text)">
+          <span class="w-1.5 h-5 rounded-sm inline-block" style="background:#f87171" aria-hidden="true"></span>
+          <i class="fa-solid fa-server text-[#f87171] fa-icon-sm" aria-hidden="true"></i>
+          Network Interface
+        </h3>
+        <div class="space-y-4">
+          <article class="method-card p-5">
+            <header class="flex items-start justify-between mb-3">
+              <div>
+                <div class="method-name mb-1">address</div>
+                <div class="method-sig">(name?: string, family?: string | number): string</div>
+              </div>
+              <span class="badge badge-red shrink-0 ml-3">
+                <i class="fa-brands fa-node-js mr-1" aria-hidden="true"></i>Node.js only
+              </span>
+            </header>
+            <p class="text-sm text-muted mb-4">
+              Returns an IP address from the current machine's network interfaces.
+              Falls back to <code class="font-mono text-xs bg-[rgba(0,168,240,0.1)] text-[#00a8f0] px-1 rounded">loopback()</code> if no match found.
+              Throws a descriptive error if called in a browser environment.
+            </p>
+            <pre class="rounded-lg p-4 text-xs leading-relaxed overflow-x-auto">ip.<span class="token-fn">address</span>();             <span class="token-comment">// first private IPv4, e.g. '192.168.1.42'</span>
+ip.<span class="token-fn">address</span>(<span class="token-string">'public'</span>);     <span class="token-comment">// first public IPv4</span>
+ip.<span class="token-fn">address</span>(<span class="token-string">'private'</span>);    <span class="token-comment">// first private IPv4</span>
+ip.<span class="token-fn">address</span>(<span class="token-string">'eth0'</span>);       <span class="token-comment">// first IPv4 on eth0</span>
+ip.<span class="token-fn">address</span>(<span class="token-string">'eth0'</span>, <span class="token-num">6</span>);   <span class="token-comment">// first IPv6 on eth0</span></pre>
+          </article>
+
+          <article class="method-card p-5">
+            <header>
+              <div class="method-name mb-1">loopback</div>
+              <div class="method-sig mb-3">(family?: string | number): string</div>
+            </header>
+            <p class="text-sm text-muted mb-3">Returns the loopback address for the given IP family.</p>
+            <pre class="rounded-lg p-4 text-xs leading-relaxed overflow-x-auto">ip.<span class="token-fn">loopback</span>();       <span class="token-comment">// '127.0.0.1'</span>
+ip.<span class="token-fn">loopback</span>(<span class="token-string">'ipv4'</span>); <span class="token-comment">// '127.0.0.1'</span>
+ip.<span class="token-fn">loopback</span>(<span class="token-string">'ipv6'</span>); <span class="token-comment">// 'fe80::1'</span></pre>
+          </article>
+        </div>
+      </section>
+
+    </div>
+  </section>
+
+  <!-- ── TYPES ── -->
+  <section id="types" class="px-6 py-20" aria-labelledby="types-heading">
+    <div class="max-w-3xl mx-auto">
+      <p class="section-tag mb-3"><i class="fa-solid fa-file-code mr-1" aria-hidden="true"></i>TypeScript</p>
+      <h2 id="types-heading" class="text-2xl font-semibold mb-8" style="color:var(--text)">Type declarations</h2>
+      <article class="method-card p-5">
+        <pre class="text-sm leading-relaxed overflow-x-auto"><span class="token-keyword">import</span> type { IPFamily, SubnetInfo } <span class="token-keyword">from</span> <span class="token-string">'node-ip-ts'</span>;
+
+<span class="token-keyword">type</span> <span class="token-fn">IPFamily</span> = <span class="token-string">'ipv4'</span> | <span class="token-string">'ipv6'</span>;
+
+<span class="token-keyword">interface</span> <span class="token-fn">SubnetInfo</span> {
+  networkAddress:   string;
+  firstAddress:     string;
+  lastAddress:      string;
+  broadcastAddress: string;
+  subnetMask:       string;
+  subnetMaskLength: number;
+  numHosts:         number;
+  length:           number;
+  <span class="token-fn">contains</span>(other: string): boolean;
+}</pre>
+      </article>
+    </div>
+  </section>
+
+  <!-- ── FAQ (renders schema FAQPage visually) ── -->
+  <section class="px-6 py-20" aria-labelledby="faq-heading">
+    <div class="max-w-3xl mx-auto">
+      <p class="section-tag mb-3"><i class="fa-solid fa-circle-question mr-1" aria-hidden="true"></i>FAQ</p>
+      <h2 id="faq-heading" class="text-2xl font-semibold mb-8" style="color:var(--text)">Frequently asked questions</h2>
+      <div class="space-y-3">
+
+        <details class="card rounded-xl p-5 group" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary class="flex items-center justify-between cursor-pointer font-medium text-sm list-none" style="color:var(--text)" itemprop="name">
+            <span><i class="fa-solid fa-circle-question text-[#00a8f0] mr-2" aria-hidden="true"></i>What is node-ip-ts?</span>
+            <i class="fa-solid fa-chevron-down text-muted text-xs transition-transform group-open:rotate-180" aria-hidden="true"></i>
+          </summary>
+          <div class="mt-3 text-sm text-muted" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">node-ip-ts is a full TypeScript rewrite of the popular <code class="font-mono text-xs bg-[rgba(0,168,240,0.1)] text-[#00a8f0] px-1 rounded">ip</code> npm package, providing type-safe IP address utilities for Node.js with zero external dependencies, ES Module and CommonJS support.</p>
+          </div>
+        </details>
+
+        <details class="card rounded-xl p-5 group" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary class="flex items-center justify-between cursor-pointer font-medium text-sm list-none" style="color:var(--text)" itemprop="name">
+            <span><i class="fa-solid fa-circle-question text-[#00a8f0] mr-2" aria-hidden="true"></i>Is node-ip-ts a drop-in replacement for the <code class="font-mono">ip</code> package?</span>
+            <i class="fa-solid fa-chevron-down text-muted text-xs transition-transform group-open:rotate-180" aria-hidden="true"></i>
+          </summary>
+          <div class="mt-3 text-sm text-muted" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">Yes. All function names and behaviors are identical to the original <code class="font-mono text-xs bg-[rgba(0,168,240,0.1)] text-[#00a8f0] px-1 rounded">ip</code> package. Simply swap <code class="font-mono text-xs">require('ip')</code> to <code class="font-mono text-xs">require('node-ip-ts')</code>.</p>
+          </div>
+        </details>
+
+        <details class="card rounded-xl p-5 group" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <summary class="flex items-center justify-between cursor-pointer font-medium text-sm list-none" style="color:var(--text)" itemprop="name">
+            <span><i class="fa-solid fa-circle-question text-[#00a8f0] mr-2" aria-hidden="true"></i>Does node-ip-ts work in the browser?</span>
+            <i class="fa-solid fa-chevron-down text-muted text-xs transition-transform group-open:rotate-180" aria-hidden="true"></i>
+          </summary>
+          <div class="mt-3 text-sm text-muted" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">All functions except <code class="font-mono text-xs bg-[rgba(0,168,240,0.1)] text-[#00a8f0] px-1 rounded">address()</code> work in both Node.js and browser/bundler environments. The <code class="font-mono text-xs">address()</code> function requires the Node.js <code class="font-mono text-xs">os</code> module and will throw a descriptive error if called in a browser.</p>
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTRIBUTING ── -->
+  <section class="px-6 py-20" aria-labelledby="contributing-heading">
+    <div class="max-w-3xl mx-auto">
+      <p class="section-tag mb-3"><i class="fa-solid fa-code-pull-request mr-1" aria-hidden="true"></i>Contributing</p>
+      <h2 id="contributing-heading" class="text-2xl font-semibold mb-4" style="color:var(--text)">Open to contributions</h2>
+      <p class="text-muted text-sm mb-8">
+        All changes must pass the test suite, include tests for new features, pass TypeScript strict mode,
+        and maintain zero external runtime dependencies.
+      </p>
+      <div class="card rounded-xl p-5">
+        <pre class="text-sm leading-relaxed overflow-x-auto"><span class="token-comment"># Clone the repo</span>
+<span class="token-keyword">git</span> clone https://github.com/denycode-dev/ip-ts.git
+<span class="token-keyword">cd</span> node-ip-ts
+
+<span class="token-comment"># Install dependencies</span>
+<span class="token-keyword">npm</span> install
+
+<span class="token-comment"># Run tests</span>
+<span class="token-keyword">npm</span> test
+
+<span class="token-comment"># Build</span>
+<span class="token-keyword">npm</span> run build</pre>
+      </div>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="https://github.com/denycode-dev/ip-ts/issues/new" target="_blank" rel="noopener noreferrer"
+          aria-label="Report an issue on GitHub (opens in new tab)"
+          class="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-lg border border-subtle hover:border-[rgba(0,168,240,0.4)] transition-colors text-muted hover:text-[#00a8f0]">
+          <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+          Report an issue
+        </a>
+        <a href="https://www.npmjs.com/package/node-ip-ts" target="_blank" rel="noopener noreferrer"
+          aria-label="View node-ip-ts on npm (opens in new tab)"
+          class="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-lg border border-subtle hover:border-[rgba(0,168,240,0.4)] transition-colors text-muted hover:text-[#00a8f0]">
+          <i class="fa-brands fa-npm text-base" aria-hidden="true"></i>
+          View on npm
+        </a>
+        <a href="https://github.com/denycode-dev/ip-ts" target="_blank" rel="noopener noreferrer"
+          aria-label="Star node-ip-ts on GitHub (opens in new tab)"
+          class="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-lg border border-subtle hover:border-[rgba(0,168,240,0.4)] transition-colors text-muted hover:text-[#00a8f0]">
+          <i class="fa-solid fa-star" aria-hidden="true"></i>
+          Star on GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main><!-- /main -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════ -->
+<footer role="contentinfo" class="px-6 py-12 border-t border-subtle" itemprop="author" itemscope itemtype="https://schema.org/Person">
+  <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <span class="font-mono text-sm font-semibold" style="color:var(--text)">
+        <span style="color:#00a8f0">ip</span>-ts
+      </span>
+      <span class="text-muted text-xs">
+        <i class="fa-solid fa-scale-balanced mr-1" aria-hidden="true"></i>
+        MIT ©
+        <span itemprop="name">Deni Irawan Nugraha</span>
+      </span>
+    </div>
+    <nav aria-label="Footer links" class="flex items-center gap-5 text-xs text-muted">
+      <a href="https://github.com/denycode-dev/ip-ts" target="_blank" rel="noopener noreferrer"
+        aria-label="GitHub repository"
+        class="flex items-center gap-1.5 hover:text-[#00a8f0] transition-colors">
+        <i class="fa-brands fa-github text-sm" aria-hidden="true"></i>GitHub
+      </a>
+      <a href="https://www.npmjs.com/package/node-ip-ts" target="_blank" rel="noopener noreferrer"
+        aria-label="npm package"
+        class="flex items-center gap-1.5 hover:text-[#00a8f0] transition-colors">
+        <i class="fa-brands fa-npm text-sm" aria-hidden="true"></i>npm
+      </a>
+      <a href="https://github.com/denycode-dev/ip-ts/blob/main/LICENSE" target="_blank" rel="noopener noreferrer"
+        aria-label="MIT License"
+        class="flex items-center gap-1.5 hover:text-[#00a8f0] transition-colors">
+        <i class="fa-solid fa-scale-balanced text-sm" aria-hidden="true"></i>License
+      </a>
+    </nav>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════════════════════════ -->
+<script>
+  /* ── Theme toggle ── */
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.classList.toggle('dark');
+    document.getElementById('iconSun').classList.toggle('hidden', !isDark);
+    document.getElementById('iconMoon').classList.toggle('hidden', isDark);
+    try { localStorage.setItem('theme', isDark ? 'dark' : 'light'); } catch(e) {}
+    document.querySelectorAll('[role="tab"]').forEach(t => {
+      t.setAttribute('aria-selected', t.id === 'tab-' + currentTab ? 'true' : 'false');
+    });
+  }
+
+  /* ── Init theme from preference / localStorage ── */
+  (function() {
+    let saved; try { saved = localStorage.getItem('theme'); } catch(e) {}
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark = saved ? saved === 'dark' : prefersDark;
+    document.documentElement.classList.toggle('dark', isDark);
+    document.getElementById('iconSun').classList.toggle('hidden', !isDark);
+    document.getElementById('iconMoon').classList.toggle('hidden', isDark);
+  })();
+
+  /* ── Install tabs ── */
+  let currentTab = 'npm';
+  function showTab(tab) {
+    currentTab = tab;
+    ['npm','pnpm','yarn'].forEach(t => {
+      const btn = document.getElementById('tab-' + t);
+      const panel = document.getElementById('code-' + t);
+      const isActive = t === tab;
+      btn.className = 'px-4 py-2 text-xs ' + (isActive ? 'tab-active' : 'tab-inactive');
+      btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      panel.classList.toggle('hidden', !isActive);
+    });
+  }
+
+  /* ── Smooth scroll for anchor links ── */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const el = document.querySelector(a.getAttribute('href'));
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+
+</body>
+</html>

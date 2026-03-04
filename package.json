@@ -3,7 +3,7 @@
   "version": "1.2.2",
   "author": "Deni Irawan Nugraha <deni.irawan40563@gmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/denycode-dev/ip-ts",
+  "homepage": "https://node-ip-ts.vercel.app",
   "repository": {
     "type": "git",
     "url": "https://github.com/denycode-dev/ip-ts.git",
